@@ -2,20 +2,20 @@ package _50
 
 func firstUniqChar(s string) byte {
 	m := make([]int, 26)
-	var order []int
+	var q []int
 
-	for _,c32 := range s{
-		pos := int(c32 - 'a')
+	for _, c := range s{
+		pos := int(c - 'a')
 		m[pos] += 1
 		if m[pos] == 1{
-			order = append(order,pos)
+			q = append(q, pos)
+		}
+		for len(q) > 0 && m[q[0]] > 1{
+			q = q[1:]
 		}
 	}
-
-	for _,c := range order{
-		if m[c] == 1{
-			return byte(c+'a')
-		}
+	if len(q) != 0{
+		return byte(q[0]+'a')
 	}
 	return ' '
 }
